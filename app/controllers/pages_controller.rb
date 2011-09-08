@@ -14,6 +14,7 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(params[:page])
     if @page.save
+      @page.publish(render_to_string 'page') if @page.published
       redirect_to page_path(@page), :notice => "Page successfully created"
     else
       redirect_to new_page_path, :error => "Please review the errors in the form submission"
@@ -22,7 +23,7 @@ class PagesController < ApplicationController
 
   def publish
     @page = Page.find(params[:id])
-    @page.publish
+    @page.publish(render_to_string 'page')
     respond_to do |format|
       format.html { redirect_to page_path(@page) }
       format.js

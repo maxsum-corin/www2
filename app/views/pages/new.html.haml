@@ -1,0 +1,29 @@
+%br/
+%h1.alt New Page
+%hr/
+%fieldset
+  = form_for @page do |f|
+    %p
+      = f.label :title
+      %br/
+      = f.text_field  :title
+    %p
+      = f.label :tags
+      %br/
+      = f.text_field :tags
+    %p
+      = f.label :url
+      %br/
+      = f.text_field :url
+    %p
+      = f.label :content
+      %br/
+      = f.text_area :content
+    %p
+      = f.label :published
+      = f.check_box :published
+    %p
+      = f.label :content_type
+      = f.text_field :content_type
+    %p
+      = f.submit "Submit"

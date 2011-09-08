@@ -4,7 +4,7 @@ describe Page do
   before(:each) do
     @valid_attributes = {
       :title => "Test Page",
-      :url => "/pages/about/test.html",
+      :url => "/test.html",
       :content => "### Hello World",
       :content_type => "Markdown",
       :published => true,

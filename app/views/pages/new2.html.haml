@@ -1,0 +1,20 @@
+- form_for @page do |f|
+  = f.label :title
+  = f.text_field  :title
+  %br/
+  = f.label :tags
+  = f.text_field :tags
+  %br/
+  = f.label :url
+  = f.text_field :url
+  %br/
+  = f.label :content
+  = f.text_area :content
+  %br/
+  = f.label :published
+  = f.check_box :published
+  %br/
+  = f.label :content_type
+  = f.text_field :content_type
+  %br/
+  = submit_tag "Submit"
