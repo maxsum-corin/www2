@@ -5,12 +5,31 @@ class Page < ActiveRecord::Base
   CONTENT_TYPES = { :markdown => "Markdown", :html => "HTML" }
   
   validates_presence_of :title, :content, :content_type, :url
+  validates :content_type, :inclusion => { :in => CONTENT_TYPES.values, :message => "%{value} is not a valid content_type" }
+  validates :url, :format => { :with => /^*[\w\/]+.(html|htm)$/, :message => "Url must end with .html or .htm" }
+  before_save :sanitize_url
+
+  def sanitize_url
+    first_char = url[0,1]
+    self.url = "/#{url}" unless first_char == "/"
+  end
   
   def publish(page_html_content)
     self.published = true
     if self.save
-      File.unlink(file_path) if File.file?(file_path)
+      if File.file?(file_path)
+        File.unlink(file_path)
+      else
+        create_directories
+      end
       File.open(file_path, 'w') { |file| file.write(page_html_content) }
+    end
+  end
+
+  def unpublish
+    self.published = false
+    if self.save and File.file?(file_path)
+      File.unlink(file_path)
     end
   end
 
@@ -25,5 +44,19 @@ class Page < ActiveRecord::Base
       formatted_content = content
     end
     return formatted_content
+  end
+
+  def create_directories
+    base_directory = File.dirname(file_path)
+    created = File.directory?(base_directory)
+    hierarchy = Array.new
+    until created
+      hierarchy << base_directory
+      base_directory = File.dirname(base_directory)
+      created = File.directory?(base_directory)
+    end
+    hierarchy.reverse.each do |dir|
+      Dir.mkdir(dir)
+    end
   end
 end

@@ -29,4 +29,13 @@ class PagesController < ApplicationController
       format.js
     end
   end
+  
+  def unpublish
+    @page = Page.find(params[:id])
+    @page.unpublish
+    respond_to do |format|
+      format.html { redirect_to page_path(@page) }
+      format.js
+    end
+  end
 end

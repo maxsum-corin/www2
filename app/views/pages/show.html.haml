@@ -24,8 +24,11 @@
 .span-5.colborder
   %h3 Published
 .span-18.last
-  = @page.published
+  = @page.published ? "Yes" : "No"
 %hr/
-= link_to "Publish Page!", publish_path(@page), :class => "button positive" unless @page.published
+- if @page.published
+  = link_to "Unpublish Page!", unpublish_path(@page), :class => "button negative"
+- else
+  = link_to "Publish Page!", publish_path(@page), :class => "button positive"
 = link_to "Edit Page!", edit_page_path(@page), :class => "button positive"
 = link_to "<< Go Back", pages_path, :class => "button positive"
