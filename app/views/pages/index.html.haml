@@ -1,0 +1,11 @@
+%h1 All the Pages
+  
+- @pages.each do |page|
+  %h2= page.title
+  %p
+    %span= page.url
+    %span= page.published
+    %span= page.content
+    %span= page.content_type
+  
+= link_to "Create New Page", new_page_path
