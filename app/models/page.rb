@@ -1,13 +1,24 @@
 require 'maruku'
 
-class Page < ActiveRecord::Base
+class Page
   
+  include DataMapper::Resource
+
   CONTENT_TYPES = { :markdown => "Markdown", :html => "HTML" }
+
+  property :id,           Serial
+  property :title,        String, :required => true
+  property :content,      String, :required => true # TODO: Text(?) Blob(?)
+  property :content_type, String, :required => true # TODO: Enum
+  property :url,          String, :required => true, :format => /^[\w\/]+\.html?$/,
+                                  :messages => {
+                                    :presence => "Please specifiy a URL",
+                                    :format   => "URL must end with .html or .htm"
+                                  }
+  property :published,    Boolean
   
-  validates_presence_of :title, :content, :content_type, :url
-  validates :content_type, :inclusion => { :in => CONTENT_TYPES.values, :message => "%{value} is not a valid content_type" }
-  validates :url, :format => { :with => /^*[\w\/]+.(html|htm)$/, :message => "Url must end with .html or .htm" }
-  before_save :sanitize_url
+  #validates :content_type, :inclusion => { :in => CONTENT_TYPES.values, :message => "%{value} is not a valid content_type" }
+  before :save, :sanitize_url
 
   def sanitize_url
     first_char = url[0,1]

@@ -5,8 +5,12 @@
 # gem 'activerecord-jdbcsqlite3-adapter'
 #
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: sqlserver
+  database: EXO_CYBERSECURE_WEBDEV
+  host: '10.10.2.11'
+  port: 1433
+  username: pg
+  password: 'D^G#$W#D&$#0t'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

@@ -22,7 +22,7 @@ class PagesController < ApplicationController
   end
 
   def publish
-    @page = Page.find(params[:id])
+    @page = Page.get(params[:id])
     @page.publish(render_to_string 'page')
     respond_to do |format|
       format.html { redirect_to page_path(@page) }
@@ -31,7 +31,7 @@ class PagesController < ApplicationController
   end
   
   def unpublish
-    @page = Page.find(params[:id])
+    @page = Page.get(params[:id])
     @page.unpublish
     respond_to do |format|
       format.html { redirect_to page_path(@page) }
