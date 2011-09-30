@@ -6,6 +6,7 @@ gem 'activerecord-jdbcsqlite3-adapter'
 
 gem 'jruby-openssl'
 gem 'json'
+gem 'therubyrhino'
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
