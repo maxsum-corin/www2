@@ -1,0 +1,9 @@
+/index.php
+/license.txt
+/readme.html
+*.tmp
+/wp-*.php
+/wp-*/
+/xmlrpc.php
+!/wp-content/
+!/wp-config.php
